@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html ng-app="githubViewer">
+
+<head>
+    <script src="js/angular.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/script.js"></script>
+</head>
+
+<body ng-controller="MainController">
+    <center>
+        <!--
+      <div>First Name: {{person.firstName}}</div>
+      <div>Last Name: {{person.lastName}}</div>
+      <img ng-src="{{person.imageSrc}}" title="{{person.firstName}} {{person.lastName}}" alt="My Image">
+    <h1>{{message}}</h1>
+      {{45/65}}
+
+-->
+        <h1>{{message}}</h1>
+
+        <h4>{{username}}</h4>
+
+        <form>
+            <br>
+            <input type="search" placeholder="Enter username" required ng-model="username" ng-change="search(username)">
+            <input type="submit" value="submit" ng-click="search(username)"> </form>
+        <div>{{error}}</div>
+        <div>Name: {{user.name}}</div>
+        <div>Company: {{user.company}}</div>
+        <div>Location: {{user.location}}</div> <img ng-src="{{user.avatar_url}}" title="{{user.name}}" alt="My Image">
+        <hr>
+        
+        Order By:
+        <select ng-model="repoSortOrder">
+            <option value="+name">Name</option>
+            <option value="-stargazers_count">Stars</option>
+            <option value="+language">Language</option>
+        </select>
+        
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Stars</th>
+                    <th>Language</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="repo in repos | orderBy:repoSortOrder">
+                    <td>{{repo.name}}</td>
+                    <td>{{repo.stargazers_count | number}}</td>
+                    <td>{{repo.language}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </center>
+</body>
+
+</html>
