@@ -1,4 +1,4 @@
-<div>
+<div id="user-details">
     <div>{{error}}</div>
     <div>Name: {{user.name}}</div>
     <div>Company: {{user.company}}</div>
@@ -23,7 +23,7 @@
         <tbody>
             <tr ng-repeat="repo in repos | orderBy:repoSortOrder">
                 <td ng-bind="repo.name"></td>
-                <td ng-bind="repo.stargazers_count | number"></td>
+                <td ng-bind="repo.stargazers_count | number:$"></td>
                 <td ng-bind="repo.language"></td>
             </tr>
         </tbody>

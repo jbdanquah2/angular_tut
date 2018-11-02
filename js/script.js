@@ -63,39 +63,54 @@
 //    
 //}());
 //
-
-
-
 (function () {
     var app = angular.module("githubViewer", []);
-    
-    var MainController = function ($scope, $http) {
-        $scope.message ="Github Viewer";
-        $scope.repoSortOrder = "-stargazers_count";
-        $scope.username = "angular";
-
+    var MainController = function ($scope, $http, $interval, $log, $anchorScroll, $location) {
+        
+            
         var onComplete = function (response) {
             $scope.user = response.data;
-            
-            $http.get($scope.user.repos_url)
-            .then(onRepos, onError);
-
-        }
-
-        var onRepos = function(response) {
-            $scope.repos = response.data;
-        }
+            $http.get($scope.user.repos_url).then(onRepos, onError);
+        };
         
+        var onRepos = function (response) {
+            $scope.repos = response.data;
+            $location.hash("user-details");
+            $anchorScroll();
+        };
         
         var onError = function (reason) {
             $scope.error = "unable to connect";
-
-        }
-        $scope.search = function(username) {
-            $http.get("https://api.github.com/users/"+ username).then(onComplete, onError);
-        }
+        };
+        
+        var decrementCountdown = function () {
+            $scope.countdown -= 1;
+            if ($scope.countdown < 1) {
+                $scope.search($scope.username);
+            }
+        };
+        
+        $scope.countDownInterval = null;
+        var startCountdown = function(){
+          $scope.countDownInterval = $interval(decrementCountdown, 1000, $scope.countdown);
+        };
+        
+        $scope.search = function (username) {
+            $log.info("Searching for " + username);
+            $http.get("https://api.github.com/users/" + username).then(onComplete, onError);
+            if($scope.countDownInterval) {
+                $interval.cancel($scope.countDownInterval);
+                $scope.countdown = null;
+            }
+        };
+              
+        
+        $scope.message = "Github Viewer";
+        $scope.repoSortOrder = "-stargazers_count";
+        $scope.username = "angular";
+        $scope.countdown = 5;
+        startCountdown();
+        
     };
-    
-    
-    app.controller("MainController", ["$scope", "$http", MainController]);
+    app.controller("MainController", MainController);
 }());
