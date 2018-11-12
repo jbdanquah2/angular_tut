@@ -3,30 +3,18 @@
 
 <head>
     <script src="js/angular.min.js"></script>
+    <script src="http://code.angularjs.org/1.7.5/angular-route.js"></script>
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/script.js"></script>
+    <script src="js/route/app.js"></script>
+    <script src="js/controller/MainController.js"></script>
+    <script src="js/controller/UserController.js"></script>
+    <script src="js/services/github.js"></script>
 </head>
 
-<body ng-controller="MainController">
-    <center>
-        <!--
-      <div>First Name: {{person.firstName}}</div>
-      <div>Last Name: {{person.lastName}}</div>
-      <img ng-src="{{person.imageSrc}}" title="{{person.firstName}} {{person.lastName}}" alt="My Image">
-    <h1>{{message}}</h1>
-      {{45/65}}
-
--->
-        <h1>{{message}}</h1>
-        
-        <div >{{countdown}}</div>
-        <form>
-            <br>
-            <input type="search" placeholder="Enter username" required ng-model="username">
-            <input type="submit" value="submit" ng-click="search(username)"> </form>
-        
-        <div ng-include="'user-details'" ng-show="user"></div>
-    </center>
+<body>
+    <h1>Github Viewer</h1>
+    <div ng-view></div>
 </body>
+
 
 </html>
